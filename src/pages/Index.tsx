@@ -159,30 +159,37 @@ function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
     <div className="pb-nav overflow-x-hidden">
 
       {/* ── Hero ── */}
-      <div className="relative h-[72vw] max-h-80 min-h-52 overflow-hidden">
-        <img src={HERO_IMG} alt="Субботино" className="w-full h-full object-cover scale-105" />
-        {/* layered gradient */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.72) 100%)" }} />
-        {/* top bar */}
-        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 pt-4">
-          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/60">Субботино · Портал</span>
-          <div className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm rounded-full px-3 py-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[10px] font-semibold text-white">онлайн</span>
+      <div
+        className="relative overflow-hidden"
+        style={{ background: "linear-gradient(135deg, #0a58ca 0%, #0d6efd 60%, #3d8bff 100%)" }}
+      >
+        {/* decorative circles */}
+        <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-white/5" />
+        <div className="absolute -bottom-8 -left-8 w-36 h-36 rounded-full bg-white/5" />
+        <div className="absolute top-6 right-16 w-16 h-16 rounded-full bg-white/8" />
+
+        <div className="relative px-5 pt-8 pb-7 text-white">
+          {/* label */}
+          <div className="flex items-center gap-2 mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span className="text-[11px] font-semibold tracking-widest uppercase text-white/60">Портал жителей</span>
           </div>
-        </div>
-        {/* bottom content */}
-        <div className="absolute bottom-0 left-0 right-0 px-5 pb-6 text-white">
-          <h1 className="text-4xl font-bold leading-none tracking-tight font-display drop-shadow-lg">Субботино</h1>
-          <p className="text-sm text-white/70 mt-1.5 font-medium">Всё важное — рядом с вами</p>
-          {/* weather pill */}
-          <div className="inline-flex items-center gap-2 mt-3 bg-white/15 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
-            <span className="text-lg">☀️</span>
-            <span className="text-sm font-bold">+18°C</span>
-            <span className="text-white/50 text-sm">·</span>
-            <span className="text-xs text-white/70">Ясно, 3 м/с</span>
-            <span className="text-white/50 text-sm">·</span>
-            <span className="text-xs text-white/70">Суббота</span>
+
+          {/* title */}
+          <h1 className="text-[38px] font-bold leading-none tracking-tight font-display">Субботино</h1>
+          <p className="text-sm text-white/60 mt-1.5">Всё важное — рядом с вами</p>
+
+          {/* weather row */}
+          <div className="flex items-center gap-3 mt-5 pt-5 border-t border-white/15">
+            <span className="text-2xl">☀️</span>
+            <div>
+              <p className="text-lg font-bold leading-none">+18°C</p>
+              <p className="text-xs text-white/55 mt-0.5">Ясно · ветер 3 м/с</p>
+            </div>
+            <div className="ml-auto text-right">
+              <p className="text-sm font-semibold">3 мая 2026</p>
+              <p className="text-xs text-white/55">Суббота</p>
+            </div>
           </div>
         </div>
       </div>
