@@ -100,9 +100,9 @@ function Card({ children, className }: { children: React.ReactNode; className?: 
 
 function PageHeader({ title, sub, action }: { title: string; sub?: string; action?: React.ReactNode }) {
   return (
-    <div className="px-4 pt-5 pb-4 flex items-start justify-between">
+    <div className="px-5 pt-5 pb-4 flex items-start justify-between">
       <div>
-        <h2 className="text-xl font-bold text-foreground">{title}</h2>
+        <h2 className="text-2xl font-bold text-foreground">{title}</h2>
         {sub && <p className="text-sm text-muted-foreground mt-0.5">{sub}</p>}
       </div>
       {action}
@@ -195,7 +195,7 @@ function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
       </div>
 
       {/* ── Quick nav ── */}
-      <div className="px-4 mt-5">
+      <div className="px-5 mt-5">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Разделы</p>
         </div>
@@ -204,19 +204,19 @@ function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
             <button
               key={item.page}
               onClick={() => onNavigate(item.page)}
-              className={`stagger-${i + 1} animate-fade-in-up group relative flex flex-col items-center justify-center gap-2 rounded-2xl py-5 active:scale-95 transition-all duration-200 overflow-hidden shadow-md`}
+              className={`stagger-${i + 1} animate-fade-in-up group relative flex flex-col items-center justify-center gap-2 rounded-2xl py-6 active:scale-95 transition-all duration-200 overflow-hidden shadow-md`}
               style={{ background: item.grad }}
             >
               <div className="absolute inset-0 bg-black/0 group-active:bg-black/10 transition-colors" />
-              <span className="text-2xl drop-shadow">{item.emoji}</span>
-              <span className="text-[11px] font-bold text-white drop-shadow-sm">{item.label}</span>
+              <span className="text-3xl drop-shadow">{item.emoji}</span>
+              <span className="text-xs font-bold text-white drop-shadow-sm">{item.label}</span>
             </button>
           ))}
         </div>
       </div>
 
       {/* ── Alert banner ── */}
-      <div className="px-4 mt-5">
+      <div className="px-5 mt-5">
         <div
           className="rounded-2xl px-4 py-3.5 flex items-center gap-3 animate-fade-in-up stagger-2"
           style={{ background: "linear-gradient(135deg, #fff3cd, #ffeeba)" }}
@@ -246,7 +246,7 @@ function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
         {/* first news — big card */}
         <button
           onClick={() => onNavigate("news")}
-          className="stagger-3 animate-fade-in-up w-full px-4 mb-3 text-left"
+          className="stagger-3 animate-fade-in-up w-full px-5 mb-3 text-left"
         >
           <div className="relative rounded-2xl overflow-hidden shadow-md">
             <img src={HERO_IMG} alt="" className="w-full h-40 object-cover" />
@@ -260,20 +260,20 @@ function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
         </button>
 
         {/* rest news — horizontal scroll */}
-        <div className="flex gap-3 overflow-x-auto scrollbar-hide px-4 pb-1">
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide px-5 pb-1">
           {news.slice(1).map((item, i) => (
             <button
               key={item.id}
               onClick={() => onNavigate("news")}
-              className={`stagger-${i + 4} animate-fade-in-up shrink-0 w-52 text-left bg-white rounded-2xl shadow-card overflow-hidden active:scale-95 transition-transform`}
+              className={`stagger-${i + 4} animate-fade-in-up shrink-0 w-[60vw] max-w-[240px] text-left bg-white rounded-2xl shadow-card overflow-hidden active:scale-95 transition-transform`}
             >
-              <div className="h-24 overflow-hidden">
+              <div className="h-28 overflow-hidden">
                 <img src={HERO_IMG} alt="" className="w-full h-full object-cover" style={{ filter: `hue-rotate(${i * 40}deg) saturate(0.7)` }} />
               </div>
-              <div className="px-3 py-2.5">
+              <div className="px-3.5 py-3">
                 <Badge label={item.category} />
-                <p className="text-xs font-semibold mt-1.5 leading-snug line-clamp-2">{item.title}</p>
-                <p className="text-[10px] text-muted-foreground mt-1">{item.date}</p>
+                <p className="text-sm font-semibold mt-1.5 leading-snug line-clamp-2">{item.title}</p>
+                <p className="text-xs text-muted-foreground mt-1">{item.date}</p>
               </div>
             </button>
           ))}
@@ -281,7 +281,7 @@ function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
       </div>
 
       {/* ── Announcements preview ── */}
-      <div className="mt-5 px-4 mb-4">
+      <div className="mt-5 px-5 mb-4">
         <div className="flex items-center justify-between mb-3">
           <p className="text-base font-bold">Объявления</p>
           <button onClick={() => onNavigate("announcements")} className="text-xs font-semibold" style={{ color: BLUE }}>
@@ -315,7 +315,7 @@ function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
       </div>
 
       {/* ── Stats ── */}
-      <div className="px-4 mb-2">
+      <div className="px-5 mb-2">
         <div
           className="rounded-2xl px-5 py-5 text-white animate-fade-in-up stagger-4"
           style={{ background: "linear-gradient(135deg, #0a58ca 0%, #0d6efd 50%, #3d8bff 100%)" }}
@@ -375,11 +375,11 @@ function NewsPage() {
   return (
     <div className="pb-nav">
       <PageHeader title="Новости" sub="Субботино и округа" />
-      <div className="px-4 space-y-2.5">
+      <div className="px-5 space-y-3">
         {news.map((item, i) => (
           <Card
             key={item.id}
-            className={`stagger-${i + 1} animate-fade-in-up px-4 py-3.5 cursor-pointer active:scale-[0.99] transition-transform`}
+            className={`stagger-${i + 1} animate-fade-in-up px-4 py-4 cursor-pointer active:scale-[0.99] transition-transform`}
           >
             <button className="w-full text-left" onClick={() => setSelected(item.id)}>
               <div className="flex items-center gap-2 mb-2">
@@ -418,7 +418,7 @@ function AnnouncementsPage() {
       />
 
       {showForm && (
-        <div className="px-4 mb-4">
+        <div className="px-5 mb-4">
           <Card className="p-4 animate-fade-in-up">
             <p className="text-sm font-bold mb-3">Новое объявление</p>
             <div className="space-y-2.5">
@@ -434,9 +434,9 @@ function AnnouncementsPage() {
         </div>
       )}
 
-      <div className="px-4 space-y-2.5">
+      <div className="px-5 space-y-3">
         {announcements.map((item, i) => (
-          <Card key={item.id} className={`stagger-${i + 1} animate-fade-in-up px-4 py-3.5`}>
+          <Card key={item.id} className={`stagger-${i + 1} animate-fade-in-up px-4 py-4`}>
             <div className="flex items-start gap-3">
               <div
                 className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0"
@@ -489,13 +489,13 @@ function PhonebookPage() {
   return (
     <div className="pb-nav">
       <PageHeader title="Телефонная книга" sub="Важные номера посёлка" />
-      <div className="px-4 mb-4">
+      <div className="px-5 mb-4">
         <div className="relative">
           <Icon name="Search" size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <Input className="pl-10" placeholder="Поиск по имени или номеру" value={search} onChange={e => setSearch(e.target.value)} />
         </div>
       </div>
-      <div className="px-4 space-y-2.5">
+      <div className="px-5 space-y-3">
         {filtered.map((cat, ci) => (
           <Card key={cat.id} className={`stagger-${ci + 1} animate-fade-in-up overflow-hidden`}>
             <button
@@ -669,9 +669,9 @@ function ProfilePage() {
         </div>
       </div>
 
-      <div className="px-4 -mt-3 space-y-3">
+      <div className="px-5 -mt-3 space-y-3">
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-3 gap-3">
           {[
             { label: "Объявлений", value: "3" },
             { label: "Сообщений",  value: "47" },
@@ -728,7 +728,7 @@ function AboutPage() {
         </div>
       </div>
 
-      <div className="px-4 pt-4 space-y-2.5">
+      <div className="px-5 pt-4 space-y-3">
         {[
           { icon: "MapPin",    title: "Расположение",   text: "Посёлок Субботино расположен в живописном месте, окружён лесами и полями. До районного центра — 15 км." },
           { icon: "Users",     title: "Население",      text: "Около 1 200 жителей. Активное сообщество, которое помогает друг другу и развивает территорию." },
@@ -781,15 +781,15 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-background max-w-sm mx-auto relative overflow-x-hidden">
-      <main className="min-h-screen">{render()}</main>
+    <div className="min-h-screen bg-background relative overflow-x-hidden">
+      <main className="min-h-screen max-w-lg mx-auto">{render()}</main>
 
       {/* Bottom nav */}
       <nav
-        className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm bg-white border-t border-border z-50 shadow-[0_-2px_12px_rgba(0,0,0,0.06)]"
+        className="fixed bottom-0 left-0 right-0 bg-white border-t border-border z-50 shadow-[0_-2px_12px_rgba(0,0,0,0.07)]"
         style={{ height: "var(--nav-height)" }}
       >
-        <div className="flex h-full">
+        <div className="flex h-full max-w-lg mx-auto">
           {navItems.map(item => {
             const active = page === item.id;
             return (
@@ -801,14 +801,14 @@ export default function Index() {
               >
                 {active && (
                   <div
-                    className="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 w-8 rounded-b-full"
+                    className="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 w-10 rounded-b-full"
                     style={{ background: BLUE }}
                   />
                 )}
-                <div className={`flex items-center justify-center w-7 h-7 rounded-full transition-all ${active ? "bg-blue-50" : ""}`}>
-                  <Icon name={item.icon} size={18} />
+                <div className={`flex items-center justify-center w-8 h-8 rounded-full transition-all ${active ? "bg-blue-50" : ""}`}>
+                  <Icon name={item.icon} size={20} />
                 </div>
-                <span className="text-[9px] font-semibold">{item.label}</span>
+                <span className="text-[10px] font-semibold">{item.label}</span>
               </button>
             );
           })}
