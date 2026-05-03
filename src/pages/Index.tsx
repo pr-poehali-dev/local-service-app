@@ -145,97 +145,190 @@ function Btn({ children, variant = "primary", className, onClick }: {
 
 // ─── Home ─────────────────────────────────────────────────────────────────────
 
+const quickNav = [
+  { icon: "Newspaper",     label: "Новости",    page: "news" as Page,          grad: "linear-gradient(135deg,#667eea,#764ba2)", emoji: "📰" },
+  { icon: "Megaphone",     label: "Объявления", page: "announcements" as Page, grad: "linear-gradient(135deg,#f093fb,#f5576c)", emoji: "📢" },
+  { icon: "Phone",         label: "Телефоны",   page: "phonebook" as Page,     grad: "linear-gradient(135deg,#4facfe,#00f2fe)", emoji: "📞" },
+  { icon: "MessageCircle", label: "Чат",        page: "chat" as Page,          grad: "linear-gradient(135deg,#43e97b,#38f9d7)", emoji: "💬" },
+  { icon: "UserCircle",    label: "Кабинет",    page: "profile" as Page,       grad: "linear-gradient(135deg,#fa709a,#fee140)", emoji: "👤" },
+  { icon: "Info",          label: "О посёлке",  page: "about" as Page,         grad: "linear-gradient(135deg,#a18cd1,#fbc2eb)", emoji: "🏡" },
+];
+
 function HomePage({ onNavigate }: { onNavigate: (p: Page) => void }) {
   return (
-    <div className="pb-nav">
-      {/* Hero */}
-      <div className="relative h-56 overflow-hidden">
-        <img src={HERO_IMG} alt="Субботино" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 px-5 pb-5 text-white">
-          <p className="text-xs font-semibold uppercase tracking-widest opacity-70 mb-1">Портал жителей</p>
-          <h1 className="text-3xl font-bold leading-none font-display">Субботино</h1>
-          <p className="text-sm opacity-75 mt-1">Всё важное — в одном месте</p>
+    <div className="pb-nav overflow-x-hidden">
+
+      {/* ── Hero ── */}
+      <div className="relative h-[72vw] max-h-80 min-h-52 overflow-hidden">
+        <img src={HERO_IMG} alt="Субботино" className="w-full h-full object-cover scale-105" />
+        {/* layered gradient */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.72) 100%)" }} />
+        {/* top bar */}
+        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 pt-4">
+          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/60">Субботино · Портал</span>
+          <div className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm rounded-full px-3 py-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-[10px] font-semibold text-white">онлайн</span>
+          </div>
+        </div>
+        {/* bottom content */}
+        <div className="absolute bottom-0 left-0 right-0 px-5 pb-6 text-white">
+          <h1 className="text-4xl font-bold leading-none tracking-tight font-display drop-shadow-lg">Субботино</h1>
+          <p className="text-sm text-white/70 mt-1.5 font-medium">Всё важное — рядом с вами</p>
+          {/* weather pill */}
+          <div className="inline-flex items-center gap-2 mt-3 bg-white/15 backdrop-blur-md rounded-full px-4 py-2 border border-white/20">
+            <span className="text-lg">☀️</span>
+            <span className="text-sm font-bold">+18°C</span>
+            <span className="text-white/50 text-sm">·</span>
+            <span className="text-xs text-white/70">Ясно, 3 м/с</span>
+            <span className="text-white/50 text-sm">·</span>
+            <span className="text-xs text-white/70">Суббота</span>
+          </div>
         </div>
       </div>
 
-      <div className="px-4 mt-4 space-y-4">
-        {/* Weather */}
-        <Card className="flex items-center justify-between px-5 py-4 animate-fade-in-up">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">☀️</span>
-            <div>
-              <p className="text-xl font-bold leading-none">+18°C</p>
-              <p className="text-xs text-muted-foreground mt-1">Ясно · ветер 3 м/с</p>
+      {/* ── Quick nav ── */}
+      <div className="px-4 mt-5">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Разделы</p>
+        </div>
+        <div className="grid grid-cols-3 gap-3">
+          {quickNav.map((item, i) => (
+            <button
+              key={item.page}
+              onClick={() => onNavigate(item.page)}
+              className={`stagger-${i + 1} animate-fade-in-up group relative flex flex-col items-center justify-center gap-2 rounded-2xl py-5 active:scale-95 transition-all duration-200 overflow-hidden shadow-md`}
+              style={{ background: item.grad }}
+            >
+              <div className="absolute inset-0 bg-black/0 group-active:bg-black/10 transition-colors" />
+              <span className="text-2xl drop-shadow">{item.emoji}</span>
+              <span className="text-[11px] font-bold text-white drop-shadow-sm">{item.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Alert banner ── */}
+      <div className="px-4 mt-5">
+        <div
+          className="rounded-2xl px-4 py-3.5 flex items-center gap-3 animate-fade-in-up stagger-2"
+          style={{ background: "linear-gradient(135deg, #fff3cd, #ffeeba)" }}
+        >
+          <span className="text-2xl shrink-0">⚠️</span>
+          <div className="min-w-0">
+            <p className="text-xs font-bold text-amber-800">Важно · 5 мая</p>
+            <p className="text-sm font-semibold text-amber-900 leading-snug mt-0.5 truncate">
+              Отключение горячей воды с 9:00 до 17:00
+            </p>
+          </div>
+          <button onClick={() => onNavigate("news")} className="shrink-0 text-amber-700 ml-auto">
+            <Icon name="ChevronRight" size={18} />
+          </button>
+        </div>
+      </div>
+
+      {/* ── News feed ── */}
+      <div className="mt-5">
+        <div className="flex items-center justify-between px-4 mb-3">
+          <p className="text-base font-bold">Новости</p>
+          <button onClick={() => onNavigate("news")} className="text-xs font-semibold" style={{ color: BLUE }}>
+            Все новости →
+          </button>
+        </div>
+
+        {/* first news — big card */}
+        <button
+          onClick={() => onNavigate("news")}
+          className="stagger-3 animate-fade-in-up w-full px-4 mb-3 text-left"
+        >
+          <div className="relative rounded-2xl overflow-hidden shadow-md">
+            <img src={HERO_IMG} alt="" className="w-full h-40 object-cover" />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%)" }} />
+            <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
+              <Badge label={news[0].category} />
+              <p className="text-white font-bold text-sm mt-1.5 leading-snug">{news[0].title}</p>
+              <p className="text-white/60 text-xs mt-1">{news[0].date}</p>
             </div>
           </div>
-          <div className="text-right">
-            <p className="text-sm font-semibold">3 мая 2026</p>
-            <p className="text-xs text-muted-foreground">Суббота</p>
-          </div>
-        </Card>
+        </button>
 
-        {/* Quick nav */}
-        <div>
-          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">Разделы</p>
-          <div className="grid grid-cols-3 gap-2.5">
-            {[
-              { icon: "Newspaper",     label: "Новости",    page: "news" as Page,          color: "#e7f1ff", ico: "#0d6efd" },
-              { icon: "Megaphone",     label: "Объявления", page: "announcements" as Page, color: "#fff3cd", ico: "#856404" },
-              { icon: "Phone",         label: "Телефоны",   page: "phonebook" as Page,     color: "#d1e7dd", ico: "#0f5132" },
-              { icon: "MessageCircle", label: "Чат",        page: "chat" as Page,           color: "#e2d9f3", ico: "#6f42c1" },
-              { icon: "UserCircle",    label: "Кабинет",    page: "profile" as Page,        color: "#fde8e8", ico: "#842029" },
-              { icon: "Info",          label: "О посёлке",  page: "about" as Page,          color: "#f0f0f0", ico: "#495057" },
-            ].map((item, i) => (
-              <button
-                key={item.page}
-                onClick={() => onNavigate(item.page)}
-                className={`stagger-${i + 1} animate-fade-in-up flex flex-col items-center justify-center gap-2 rounded-2xl py-4 active:scale-95 transition-transform shadow-card`}
-                style={{ background: item.color }}
+        {/* rest news — horizontal scroll */}
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide px-4 pb-1">
+          {news.slice(1).map((item, i) => (
+            <button
+              key={item.id}
+              onClick={() => onNavigate("news")}
+              className={`stagger-${i + 4} animate-fade-in-up shrink-0 w-52 text-left bg-white rounded-2xl shadow-card overflow-hidden active:scale-95 transition-transform`}
+            >
+              <div className="h-24 overflow-hidden">
+                <img src={HERO_IMG} alt="" className="w-full h-full object-cover" style={{ filter: `hue-rotate(${i * 40}deg) saturate(0.7)` }} />
+              </div>
+              <div className="px-3 py-2.5">
+                <Badge label={item.category} />
+                <p className="text-xs font-semibold mt-1.5 leading-snug line-clamp-2">{item.title}</p>
+                <p className="text-[10px] text-muted-foreground mt-1">{item.date}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Announcements preview ── */}
+      <div className="mt-5 px-4 mb-4">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-base font-bold">Объявления</p>
+          <button onClick={() => onNavigate("announcements")} className="text-xs font-semibold" style={{ color: BLUE }}>
+            Все →
+          </button>
+        </div>
+        <div className="space-y-2.5">
+          {announcements.slice(0, 2).map((item, i) => (
+            <Card
+              key={item.id}
+              className={`stagger-${i + 2} animate-fade-in-up flex items-center gap-3 px-4 py-3.5`}
+            >
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-base shrink-0"
+                style={{ background: i === 0 ? quickNav[1].grad : quickNav[3].grad }}
               >
-                <Icon name={item.icon} size={22} style={{ color: item.ico }} />
-                <span className="text-xs font-semibold" style={{ color: item.ico }}>{item.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Latest news */}
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Последние новости</p>
-            <button onClick={() => onNavigate("news")} className="text-xs font-semibold" style={{ color: BLUE }}>Смотреть все →</button>
-          </div>
-          <div className="space-y-2.5">
-            {news.slice(0, 2).map((item, i) => (
-              <Card key={item.id} className={`stagger-${i + 2} animate-fade-in-up px-4 py-3.5`}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Badge label={item.category} />
-                  <span className="text-xs text-muted-foreground">{item.date}</span>
+                {item.avatar}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badgeClass[item.badge]}`}>{item.type}</span>
+                  <span className="text-[10px] text-muted-foreground">{item.date}</span>
                 </div>
-                <p className="text-sm font-semibold leading-snug">{item.title}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Announcement */}
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Свежее объявление</p>
-            <button onClick={() => onNavigate("announcements")} className="text-xs font-semibold" style={{ color: BLUE }}>Все →</button>
-          </div>
-          <Card className="px-4 py-3.5 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold shrink-0" style={{ background: SUCCESS }}>
-              {announcements[0].avatar}
-            </div>
-            <div className="min-w-0">
-              <p className="text-sm font-semibold truncate">{announcements[0].title}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">{announcements[0].contact}</p>
-            </div>
-          </Card>
+                <p className="text-sm font-semibold truncate">{item.title}</p>
+                <p className="text-xs text-muted-foreground truncate">{item.contact}</p>
+              </div>
+              <Icon name="ChevronRight" size={16} className="text-muted-foreground shrink-0" />
+            </Card>
+          ))}
         </div>
       </div>
+
+      {/* ── Stats ── */}
+      <div className="px-4 mb-2">
+        <div
+          className="rounded-2xl px-5 py-5 text-white animate-fade-in-up stagger-4"
+          style={{ background: "linear-gradient(135deg, #0a58ca 0%, #0d6efd 50%, #3d8bff 100%)" }}
+        >
+          <p className="text-xs font-bold uppercase tracking-widest opacity-70 mb-4">Посёлок в цифрах</p>
+          <div className="grid grid-cols-3 gap-4 text-center">
+            {[
+              { v: "1 200", l: "жителей" },
+              { v: "47",    l: "домов" },
+              { v: "2018",  l: "основан" },
+            ].map(s => (
+              <div key={s.l}>
+                <p className="text-2xl font-bold leading-none">{s.v}</p>
+                <p className="text-xs opacity-65 mt-1">{s.l}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
