@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 
 type Page = "home" | "news" | "announcements" | "phonebook" | "chat" | "profile" | "about";
 
@@ -402,7 +403,16 @@ function NewsPage() {
 // ─── Announcements ────────────────────────────────────────────────────────────
 
 function AnnouncementsPage() {
-  const [showForm, setShowForm] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const submit = () => {
+    if (!title.trim()) return;
+    setOpen(false);
+    setTitle(""); setDesc(""); setPhone("");
+  };
 
   return (
     <div className="pb-nav">
@@ -410,29 +420,35 @@ function AnnouncementsPage() {
         title="Объявления"
         sub="От жителей посёлка"
         action={
-          <Btn onClick={() => setShowForm(!showForm)} className="mt-0.5">
+          <Btn onClick={() => setOpen(true)} className="mt-0.5">
             <Icon name="Plus" size={15} />
             Добавить
           </Btn>
         }
       />
 
-      {showForm && (
-        <div className="px-5 mb-4">
-          <Card className="p-4 animate-fade-in-up">
-            <p className="text-sm font-bold mb-3">Новое объявление</p>
-            <div className="space-y-2.5">
-              <Input placeholder="Заголовок" />
-              <textarea
-                className="w-full bg-white border border-border rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 resize-none h-24"
-                placeholder="Описание"
-              />
-              <Input placeholder="Контактный телефон" type="tel" />
-              <Btn className="w-full justify-center">Опубликовать</Btn>
-            </div>
-          </Card>
-        </div>
-      )}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="rounded-2xl mx-4 w-[calc(100%-2rem)] max-w-md">
+          <DialogHeader>
+            <DialogTitle>Новое объявление</DialogTitle>
+            <DialogDescription>Заполните форму и нажмите «Опубликовать»</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 pt-1">
+            <Input placeholder="Заголовок" value={title} onChange={e => setTitle(e.target.value)} />
+            <textarea
+              className="w-full bg-muted border border-border rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 resize-none h-28"
+              placeholder="Описание"
+              value={desc}
+              onChange={e => setDesc(e.target.value)}
+            />
+            <Input placeholder="Контактный телефон" type="tel" value={phone} onChange={e => setPhone(e.target.value)} />
+          </div>
+          <DialogFooter className="mt-2 flex-row gap-2">
+            <Btn variant="outline" className="flex-1 justify-center" onClick={() => setOpen(false)}>Отмена</Btn>
+            <Btn className="flex-1 justify-center" onClick={submit}>Опубликовать</Btn>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <div className="px-5 space-y-3">
         {announcements.map((item, i) => (
